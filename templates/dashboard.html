@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Student DashBoard</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <script src='main.js'></script> -->
+  <style>
+
+
+
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      transition: opacity 500ms;
+      visibility: hidden;
+      opacity: 0;
+    }
+    .overlay:target {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .popup {
+      margin: 70px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 5px;
+      width: 30%;
+      position: relative;
+      transition: all 5s ease-in-out;
+    }
+    
+    .popup h2 {
+      margin-top: 0;
+      color: #333;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+    .popup .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+    .popup .close:hover {
+      color: #1b0436;
+    }
+    .popup .content {
+      max-height: 30%;
+      overflow: auto;
+    }
+    
+    @media screen and (max-width: 700px){
+      .box{
+        width: 70%;
+      }
+      .popup{
+        width: 70%;
+      }
+    }
+     main {
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+      align-items: center;
+    }
+    
+    .table-wrapper {
+      overflow: auto;
+      max-width: 100%;
+      background: linear-gradient(to right, white 30%, rgba(255, 255, 255, 0)),
+        linear-gradient(to right, rgba(255, 255, 255, 0), white 70%) 0 100%,
+        radial-gradient(
+          farthest-side at 0% 50%,
+          rgba(0, 0, 0, 0.2),
+          rgba(0, 0, 0, 0)
+        ),
+        radial-gradient(
+            farthest-side at 100% 50%,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0)
+          )
+          0 100%;
+      background-repeat: no-repeat;
+      background-color: white;
+      background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+      background-position: 0 0, 100%, 0 0, 100%;
+      background-attachment: local, local, scroll, scroll;
+    }
+    
+    tr {
+      border-bottom: 1px solid;
+    }
+    
+    th {
+      background-color: #555;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    
+    th,
+    td {
+      text-align: left;
+      padding: 0.5em 1em;
+    }
+    
+    input[type=search] {
+      border: 1px solid;
+      font-size: initial;
+      margin-bottom: 1em;
+      padding: 0.25em;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  
+  <main>
+    <label>
+      <span>Search:</span>
+      <input placeholder="Enter search term" type="search" id="searchInput">
+    </label>
+    
+    <div class="table-wrapper">
+      <table id="filterTable">
+        <thead>
+          <tr>
+            <th data-type="text">LSA ID</th>
+            <th data-type="text">Name</th>
+            <th data-type="text">Class</th>
+            <th data-type="text">Subject</th>
+            <th data-type="text">School</th>
+            <th data-type="text">Town</th>
+            <th data-type="text">Contact No</th>
+            <th data-type="number">Email</th>
+            <th data-type="number">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            <td> {{ student.sk }}</td>
+            <td> <a href="/profile/{{ student.sk }}"> {{ student.stuname }}</a></td>
+            <td>{{ student.stuclass }}</td>
+            <td>{{ student.stusubject }}</td>
+            <td>{{ student.stuschool }}</td>
+            <td>{{ student.stutown }}</td>
+            <td>{{ student.stuemail }}</td>
+            <td>{{ student.stucontact }}</td>
+            <td>{{ student.is_active }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+    </div>
+  </main>
+  <script>
+
+    const searchInput = document.getElementById('searchInput')
+const table = document.getElementById('filterTable')
+const trArray = Array.prototype.slice.call(table.querySelectorAll('tbody tr'))
+
+const filterTable = event => {
+  const searchTerm = event.target.value.toLowerCase()
+  trArray.forEach(row => {
+    row.classList.add('hidden')
+    const tdArray = Array.prototype.slice.call(row.getElementsByTagName('td'))
+    tdArray.forEach(cell => {
+      if (cell.innerText.toLowerCase().indexOf(searchTerm) > -1) {
+        row.classList.remove('hidden')
+      } 
+    })
+  })
+}
+
+searchInput.addEventListener('keyup', filterTable, false)
+  </script>
+</body>
+</html>

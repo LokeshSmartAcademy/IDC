@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:#222222; color:white;">
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+      <h2>Schedule The Test</h2>
+      <br>
+      <form class="form-horizontal" action="schedule" method="POST">
+        {% csrf_token %}
+        <label for="sel1">Select StudentName :</label>
+         <select class="form-control" id="make" name='selected_student' required>
+          <option  >Select ...</option>
+          {% for student in students %}
+              <option value='{{student.sk}}'>{{ student.sk }} {{ student.stuname }}</option>
+          {% endfor %}
+        </select>
+          <br>
+
+          <label for="sel1">Select Subject:</label>
+          <select class="form-control" id="sel1" name="selected_subject" required>
+            <option>Telugu</option>
+            <option>English</option>
+            <option>Hindi</option>
+            <!-- <option>Class reminder</option> -->
+          </select>
+          <br>
+          <label for="sel2">Select Test Type:</label>
+          <select class="form-control" id="sel2" name="test_type" required>
+            <option>PRE Test</option>
+            <option>POT Test</option>
+            <option>POOT Test </option>
+            <option>POST Test </option>
+          </select>
+          <br>
+
+          <label for="sel3">Select Level:</label>
+          <select class="form-control" id="sel3" name="test_level" required>
+            <option>Sunnapadaalu</option>
+            <option>Dheergaalu</option>
+            <option>Dwithhaalu</option>
+            <option>Samukthaalu</option>
+            <option>MahaPranalu</option>
+            <option>Sa,Sha,Ha lu</option>
+          </select>
+          <br>
+
+          <label for="schedlued_on">Schedule ON:</label>
+          <input style="color: black;" type="date" id="scheduled_date" name="scheduled_date" required>
+
+          <label for="appt">From:</label>
+          <input style="color: black;" type="time" id="time_from" name="time_from" required>
+
+          <label for="appt">To:</label>
+          <input style="color: black;" type="time" id="time_to" name="time_to" required>
+          
+        
+          <div class="form-group">        
+          <div class="col-sm-10" >
+            <div> 
+              <h3>
+                  {% for message in messages %}
+                           {{ message}}
+                  {% endfor %}         
+              </h3>
+          </div>
+            <!-- <div class="checkbox">
+              <label><input type="checkbox" name="remember"> Remember me</label>
+            </div> -->
+          </div>
+          <div style="float: right;">
+            <a style="color: white;text-decoration: none;"
+             href="/" class="previous">&laquo; Back</a>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+          <!-- <div style="float: right;">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

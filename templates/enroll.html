@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script> -->
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+section {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f8dd30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+section .container {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  background: #fff;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+section .container .user {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+section .container .user .imgBx {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  background: #ff0;
+  transition: 0.5s;
+}
+
+section .container .user .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+section .container .user .formBx {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  transition: 0.5s;
+}
+
+section .container .user .formBx form h2 {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+section .container .user .formBx form input {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  background: #f5f5f5;
+  color: #333;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  margin: 8px 0;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+section .container .user .formBx form input[type='submit'] {
+  max-width: 100px;
+  background: #677eff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: 0.5s;
+}
+
+section .container .user .formBx form .signup {
+  position: relative;
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #555;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+section .container .user .formBx form .signup a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #677eff;
+}
+
+section .container .signupBx {
+  pointer-events: none;
+}
+
+section .container.active .signupBx {
+  pointer-events: initial;
+}
+
+section .container .signupBx .formBx {
+  left: 100%;
+}
+
+section .container.active .signupBx .formBx {
+  left: 0;
+}
+
+section .container .signupBx .imgBx {
+  left: -100%;
+}
+
+section .container.active .signupBx .imgBx {
+  left: 0%;
+}
+
+section .container .signinBx .formBx {
+  left: 0%;
+}
+
+section .container.active .signinBx .formBx {
+  left: 100%;
+}
+
+section .container .signinBx .imgBx {
+  left: 0%;
+}
+
+section .container.active .signinBx .imgBx {
+  left: -100%;
+}
+
+@media (max-width: 991px) {
+  section .container {
+    max-width: 400px;
+  }
+
+  section .container .imgBx {
+    display: none;
+  }
+
+  section .container .user .formBx {
+    width: 100%;
+  }
+}
+
+    </style>
+       
+</head>
+<body>
+    <section>
+      <div class="container">
+        <div class="user signinBx">
+          <div class="imgBx"><img src="https://thebetterindia-english.sgp1.digitaloceanspaces.com/uploads/2016/11/child-reading-under-tree.jpg" alt="" /></div>
+          <!-- <div class="imgBx"><img src="https://image.freepik.com/free-photo/cute-indian-child-reading-his-book-cattle-shed_75648-880.jpg" alt="" /></div> -->
+          <!-- <div class="imgBx"><img src="https://static.toiimg.com/photo/50715125.cms" alt="" /></div> -->
+
+          <div class="formBx">
+            <form action="enroll" method="POST" name="student" >
+              {% csrf_token %}
+
+              <h2>Student Enroll</h2>
+              <input type="text" name="stuname" placeholder="Student Name" />
+              <!-- <input type="text" name="stusubject" placeholder="Subject" /> -->
+              <input type="text" name="stuclass" placeholder="Class" />
+              <input type="text" name="stuschool" placeholder="School" />
+              <input type="text" name="stutown" placeholder="Town / Place" />
+              <input type="text" name="stucontact" placeholder="Contact Number" />
+              <input type="email" name="stuemail" placeholder="Email ID" />
+
+              <!-- <input type="password" name="" placeholder="Password" /> -->
+              <input type="submit" name="" value="Submit" />
+              <p class="signup">
+                School Enrollment 
+                <a href="#" onclick="toggleForm();">Click Here</a>
+              </p>
+            </form>
+          </div>
+        </div>
+        <div class="user signupBx">
+          <div class="formBx">
+            <form action="enroll" onsubmit="return false;" >
+              <h2>School Enroll</h2>
+              <input type="text" name="sclname" placeholder="School Name" />
+              <input type="text" name="scladdress" placeholder="Address" />
+              <input type="text" name="scltown" placeholder="City / Town" />
+              <input type="text" name="sclcontact" placeholder="Contact Number" />
+              <input type="email" name="sclemail" placeholder="Email ID" />
+              <!-- <input type="password" name="" placeholder="Create Password" />
+              <input type="password" name="" placeholder="Confirm Password" /> -->
+              <input type="submit" name="" value="Sign Up" />
+              <p class="signup">
+                Student Enrollment
+                <a href="#" onclick="toggleForm();">Click Here.</a>
+              </p>
+            </form>
+          </div>
+          <!-- <div class="imgBx"><img src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg" alt="" /></div> -->
+          <!-- <div class="imgBx"><img src="http://ilquotidianoinclasse.corriere.it/wp-content/uploads/2014/04/f3d4b7d7f6eefe7fd0e881ebb0958b73.jpg" alt="" /></div> -->
+          <div class="imgBx"><img src="http://clipart-library.com/newhp/school-building-clipart-free-download-best-staggering-petite-4.jpg" alt="" /></div>
+
+
+        </div>
+      </div>
+    </section>
+    <script>
+        const toggleForm = () => {
+            const container = document.querySelector('.container');
+            container.classList.toggle('active');
+          };
+    </script>
+  </body>
+</html>

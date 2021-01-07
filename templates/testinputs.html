@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+ </head>
+<body style="background-color:#222222; color:white;">
+    <br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+      
+      <h2>Select and Customize</h2>
+
+      <li>Select        
+        How many times a word want's to repeat
+        How much gap need in Every word. </li>
+        <br><br>
+
+      <div class="row">
+        <div class="col-sm-6">
+      <h4> Name : {{ name }}</h4>
+      <h4> ID : {{ sk }}</h4>
+    </div>
+    <div class="col-sm-6">
+
+      <h4> Subject : {{ sub }}</h4>
+      <h4> Test : {{ test_type }}</h4>
+      <h4> Level : {{ level }}</h4>
+
+    </div>
+     </div>
+
+      <form class="form-horizontal" action="dictationaudio" method="POST">
+        {% csrf_token %}
+
+          <!-- <label for="sel1">Select Test:</label>
+          <select class="form-control" id="sel1" name="test_type">
+            <option>PRE Test</option>
+            <option>POT Test</option>
+            <option>POOT Test</option>
+            <option>POST Test</option>
+          </select> -->
+          <input type="hidden" value="{{ test_type }}" name="test_type">
+          <input type="hidden" value="{{ sk }}" name="sk">
+          <input type="hidden" value="{{ sub }}" name="sub">
+          <input type="hidden" value="{{ level }}" name="level">
+
+        
+          <br>
+          <label for="sel1">No.Of Times:</label>
+          <select class="form-control" id="sel1" name="times" required>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          <br>
+
+          <label for="gapCheck">Time Gap: </label>
+          <label for="myCheck">Custom Input</label> 
+          <input type="checkbox" id="myCheck" name = "gapcheck" onclick="myFunction()">
+
+          <select class="form-control"  style="display:block" id="gap" name="optiongap">
+            <!-- <option>select seconds ..</option> -->
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          <br>
+          <input type="text" class="form-control"  style="display:none" id="text" placeholder="Enter Custom Number like 1.5, 1.8, 2.7 " name="customgap">
+       
+          <div class="form-group">        
+          <!-- <div class="col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+          </div> -->
+
+          <div style="float: right;">
+            <a style="color: white;text-decoration: none;"
+             href="schedules" class="previous">&laquo; Back</a>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    function myFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        text.style.display = "block";
+        gap.style.display = "none";
+    } else {
+        text.style.display = "none";
+        gap.style.display = "block";
+    }
+    }
+    </script>
+
+
+</body>
+</html>

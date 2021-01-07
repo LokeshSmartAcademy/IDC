@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <style>
+
+        #appoint_table_ajax tr td
+        {
+             -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+             -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+             box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+             padding: 0px 0px 0px 0px;
+             height: 68px;
+        }      
+         #appoint_table_ajax tr th
+        {
+             height: 63px;
+             vertical-align: middle; 
+             background-color: #00a8ff;
+             color:#fff;
+             text-align: center;
+             -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+             -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+             box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+        }
+        .app_td:hover
+        {
+             background-color: #ACB5C3;
+             cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <div class="container">            
+        
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col-md-6" style="background-color: #f0f0f0; padding: 5px 5px;">
+                    
+                          <label for="">Date:</label>
+                       <input type="date" name="" id="appoint_datetime" class="form-control">
+                </div>
+                 <div class="col-md-6" style="background-color: #f0f0f0; padding: 5px 5px;">
+                    
+                          <label for="">Department:</label>
+                           <select name="group" id="group" class="form-control">
+                               <option selected value="1">1 Department</option>
+                               <option value="2">2 Department</option>
+                               <option value="3">3 Department</option>
+                           </select>
+ 
+                </div>
+            </div>
+      <div class="row" style="padding-top: 10px;">
+            <div class="col-md-12" style="padding: 5px 5px; background-color: #d0d0d0;">
+                <table class="table table-striped table-bordered" id="appoint_table_ajax" style="background-color: #fff; margin-bottom: 0px;">
+                    <thead>
+                       <tr>
+                          <th class="uppercase bold" colspan="7" style="height: 30px !important; background-color: #fbc531 !important;">Appointment Table</th>
+                       </tr>
+                        <tr>
+                            <th>PERSON</th>
+                            <th>09:00 - 10:00</th>
+                            <th>10:00 - 11:00</th>
+                            <th>11:00 - 12:00</th>
+                            <th>12:00 - 13:00</th>
+                            <th>13:00 - 14:00</th>
+                            <th>14:00 - 15:00</th>
+                        </tr>
+                    </thead>
+                    <tbody id="person_appoint_table">
+                            <tr data-cari="user1">
+                                <td class="bold uppercase" style="text-align: center; vertical-align: middle; background-color: #2f3640; color:#fff; width:209px !important;">User 1</td>
+                                <td style="width:209px !important;" data-id="1" class="app_td detail1"></td>
+                                <td style="width:209px !important;" data-id="2" class="app_td detail2"></td>
+                                <td style="width:209px !important;" data-id="3" class="app_td detail3"></td>
+                                <td style="width:209px !important;" data-id="4" class="app_td detail4"></td>
+                                <td style="width:209px !important;" data-id="5" class="app_td detail5"></td>
+                                <td style="width:209px !important;" data-id="6" class="app_td detail6"></td>
+                            </tr>
+                             <tr data-cari="user1">
+                                <td class="bold uppercase" style="text-align: center; vertical-align: middle; background-color: #2f3640; color:#fff;">User 2</td>
+                                <td style="width:209px !important;" data-id="7" class="app_td detail7"></td>
+                                <td style="width:209px !important;" data-id="8" class="app_td detail8"></td>
+                                <td style="width:209px !important;" data-id="9" class="app_td detail9"></td>
+                                <td style="width:209px !important;" data-id="10" class="app_td detail10"></td>
+                                <td style="width:209px !important;" data-id="11" class="app_td detail11"></td>
+                                <td style="width:209px !important;" data-id="12" class="app_td detail12"></td>
+                            </tr>
+                             <tr data-cari="user1">
+                                <td class="bold uppercase" style="text-align: center; vertical-align: middle; background-color: #2f3640; color:#fff;">User 3</td>
+                                <td style="width:209px !important;" data-id="13" class="app_td detail13"></td>
+                                <td style="width:209px !important;" data-id="14" class="app_td detail4"></td>
+                                <td style="width:209px !important;" data-id="15" class="app_td detail5"></td>
+                                <td style="width:209px !important;" data-id="16" class="app_td detail16"></td>
+                                <td style="width:209px !important;" data-id="17" class="app_td detail17"></td>
+                                <td style="width:209px !important;" data-id="18" class="app_td detail18"></td>
+                            </tr>
+                             <tr data-cari="user1">
+                                <td class="bold uppercase" style="text-align: center; vertical-align: middle; background-color: #2f3640; color:#fff;">User 4</td>
+                                <td style="width:209px !important;" data-id="19" class="app_td detail19"></td>
+                                <td style="width:209px !important;" data-id="20" class="app_td detail20"></td>
+                                <td style="width:209px !important;" data-id="21" class="app_td detail21"></td>
+                                <td style="width:209px !important;" data-id="22" class="app_td detail22"></td>
+                                <td style="width:209px !important;" data-id="23" class="app_td detail23"></td>
+                                <td style="width:209px !important;" data-id="24" class="app_td detail24"></td>
+                            </tr>
+                             <tr data-cari="user1">
+                                <td class="bold uppercase" style="text-align: center; vertical-align: middle; background-color: #2f3640; color:#fff;">User 5</td>
+                                 <td style="width:209px !important;" data-id="25" class="app_td detail25"></td>
+                                <td style="width:209px !important;" data-id="26"  class="app_td detail26"></td>
+                                <td style="width:209px !important;" data-id="27"  class="app_td detail27"></td>
+                                <td style="width:209px !important;" data-id="28"  class="app_td detail28"></td>
+                                <td style="width:209px !important;" data-id="29"  class="app_td detail29"></td>
+                                <td style="width:209px !important;" data-id="30"  class="app_td detail30"></td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="appoinment_add_modal" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #C0392B; color:#fff;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" ><b>Add Appointment</b></h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #f0f0f0;" >
+                        <div class="row" >
+                            <div class="col-md-12" id="appoinment_add_form">
+                                <form id="appointment_add_form">
+                                    <input type="hidden" name="data" class="hide" id="data_id">
+                                    <div class="col-md-12" style="padding-top: 10px;">
+                                        <label for="">Person Name</label>
+                                        <input type="text" name="person_name" id="person_name" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 10px;">
+                                        <label for="">Email</label>
+                                        <input type="email" name="mail" id="mail" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 10px;">
+                                        <label for="">Telephone</label>
+                                        <input type="text" name="mobile" id="mobile" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 10px;">
+                                        <label for="">Description</label>
+                                        <textarea name="description" id="description" cols="" rows="5" class="form-control"></textarea>    
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 10px; text-align: right;">
+                                        <a onclick="$.appointment_form();" class="btn btn-success">Okey</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function()
+        {
+            $("#appoint_table_ajax").delegate('.app_td','click',function()
+            {
+                var data = $(this).data('id');
+                $("#data_id").val(data);
+                $('#appoinment_add_modal').modal('show');
+            });
+
+           $.appointment_form = function()
+           {
+                var html = $(".detail"+$("#data_id").val()).html();
+                if(html)
+                    return false;
+                var detail = '<a href="#" class="btn btn-warning form-control" title="" style="font-weight:bold; height:100% !important;">'+
+                $("#person_name").val()+'<br>'+
+                $("#mail").val()+
+                '</a><br>';
+                $(".detail"+$("#data_id").val()).append(detail);
+                $('#appoinment_add_modal').modal('hide');
+           }
+
+        });
+    </script>
+</body>
+</html>

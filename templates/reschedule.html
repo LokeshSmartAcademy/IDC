@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+ </head>
+<body style="background-color:#222222; color:white;">
+    <br><br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+      
+      <h2>ReSchedule The Test</h2>
+
+        <br><br>
+
+      <div class="row">
+        <div class="col-sm-6">
+      <h4> Name : {{ name }}</h4>
+      <h4> ID : {{ sk }}</h4>
+    </div>
+    <div class="col-sm-6">
+
+      <h4> Subject : {{ sub }}</h4>
+      <h4> Test : {{ test_type }}</h4>
+      <h4> Level : {{ level }}</h4>
+
+    </div>
+     </div>
+
+      <form class="form-horizontal" action="schedule" method="POST">
+        {% csrf_token %}
+
+          <!-- <label for="sel1">Select Test:</label>
+          <select class="form-control" id="sel1" name="test_type">
+            <option>PRE Test</option>
+            <option>POT Test</option>
+            <option>POOT Test</option>
+            <option>POST Test</option>
+          </select> -->
+          <input type="hidden" value="{{ test_type }}" name="test_type">
+          <input type="hidden" value="{{ sk }}" name="selected_student">
+          <input type="hidden" value="{{ sub }}" name="selected_subject">
+          <input type="hidden" value="{{ level }}" name="test_level">
+
+
+          <br><br><br>
+
+
+          <label for="schedlued_on">Schedule ON:</label>
+          <input style="color: black;" type="date" id="scheduled_date" name="scheduled_date" required>
+
+          <br><br>
+
+          <label for="appt">Timing:  From:</label>
+          <input style="color: black;" type="time" id="time_from" name="time_from" required>
+          <!-- <br> -->
+
+          <label for="appt">To:</label>
+          <input style="color: black;" type="time" id="time_to" name="time_to" required>
+
+        
+       
+          <div class="form-group">        
+          <!-- <div class="col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+          </div> -->
+
+          <div style="float: right;">
+            <a style="color: white;text-decoration: none;"
+             href="schedules" class="previous">&laquo; Back</a>
+            <button type="submit" name = "reschedule"  value ="reschedule" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    function myFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        text.style.display = "block";
+        gap.style.display = "none";
+    } else {
+        text.style.display = "none";
+        gap.style.display = "block";
+    }
+    }
+    </script>
+
+
+</body>
+</html>
