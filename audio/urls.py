@@ -16,6 +16,8 @@ urlpatterns = [
     path('dictationaudio', views.dictationaudio,name="dictationaudio"),
     path('statusupdate', views.statusupdate,name="statusupdate"),
     path('testinputs', views.testinputs, name="testinputs"),
+    path('profile/<str:sk>/marksinit', views.marksinit, name="marksinit"),
+    path('profile/<str:sk>/marksupdate', views.marksupdate, name="marksupdate"),
 
     # path('download/<int:id>', download_view)
     # path('enroll', views.student_enroll, name="enroll"),

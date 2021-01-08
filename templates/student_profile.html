@@ -11,6 +11,7 @@
              <!-- <script src='main.js'></script> -->
          </head>
          <style>
+           
             body {
                 padding: 0;
                 margin: 0;
@@ -72,6 +73,60 @@
               <p class="mb-0"><strong class="pr-1">Contact:</strong>{{ student_meta.stucontact }}</p>
               <p class="mb-0"><strong class="pr-1">Email:</strong>{{ student_meta.stuemail }}</p>
               <p class="mb-0"><strong class="pr-1">Active:</strong>{{ student_meta.is_active }}</p>
+              <!-- <form action="marksinit" method="POST">
+                {% csrf_token %}
+
+                <button type="submit" > First Time </button>
+              </form> -->
+
+            </div>
+          </div>
+          <br> 
+          <div class="card shadow-sm">
+            
+            <div class="card-body">
+   
+              <form action="marksupdate" method="POST">
+                {% csrf_token %}
+                <label for="level">Choose Level:</label>
+                    <select id="level" name="level">
+                      <option value="PRE_l1">PRE L1</option>
+                      <option value="PRE_l2">PRE_L2</option>
+                      <option value="PRE_l3">PRE L3</option>
+                      <option value="PRE_l4">PRE L4</option>
+                      <option value="PRE_l5">PRE L5</option>
+                      <option value="PRE_l6">PRE L6</option>
+                      <option value="POT_l1">POT L1</option>
+                      <option value="POT_l2">POT L2</option>
+                      <option value="POT_l3">POT L3</option>
+                      <option value="POT_l4">POT L4</option>
+                      <option value="POT_l5">POT L5</option>
+                      <option value="POT_l6">POT L6</option>
+                      <option value="POOT_l1">POOT L1</option>
+                      <option value="POOT_l2">POOT L2</option>
+                      <option value="POOT_l3">POOT L3</option>
+                      <option value="POOT_l4">POOT L4</option>
+                      <option value="POOT_l5">POOT L5</option>
+                      <option value="POOT_l6">POOT L6</option>
+                      <option value="POST_l1">POST L1</option>
+                      <option value="POST_l2">POST L2</option>
+                      <option value="POST_l3">POST L3</option>
+                      <option value="POST_l4">POST L4</option>
+                      <option value="POST_l5">POST L5</option>
+                      <option value="POST_l6">POST L6</option>
+                    </select>
+                    <br>
+                    <input type="text" name="marks">         
+
+                <button type="submit" > POST Marks </button>
+
+                <p style="color: red;">
+                  {% for message in messages %}
+                  <br>
+                           {{ message}}
+                  {% endfor %}         
+                </p>
+              </form>
 
             </div>
           </div>
@@ -159,98 +214,100 @@
                 </tr>
                 <tr>
                   <th width="14%" rowspan="2">PRE</th>
-                  <td width="2%">25 </td>
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>  
-                  <td>25</td>
+                  <td width="2%"> {{ marks.PRE_l1 }} </td>
+                  <td> {{ marks.PRE_l2 }}</td>
+                  <td> {{ marks.PRE_l3 }}</td>
+                  <td> {{ marks.PRE_l4 }}</td>
+                  <td> {{ marks.PRE_l5 }}</td>
+                  <td> {{ marks.PRE_l6 }}</td>  
+                  <td> {{ marks.PRE_l6 }}</td>
+                  <td> {{ marks.PRE_l6 }}</td>
+
                 </tr>
                 <tr>
                   <!-- <th width="14%">POT</th> -->
                   <!-- <td width="2%">25 </td> -->
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>    
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>
-                  <td>25</td>    
-                  <td>25</td>
+                  <td> {{ marks.PRE_l1 }}</td>
+                  <td> {{ marks.PRE_l2 }}</td>
+                  <td> {{ marks.PRE_l3 }}</td>
+                  <td> {{ marks.PRE_l4 }}</td>
+                  <td> {{ marks.PRE_l5 }}</td>
+                  <td> {{ marks.PRE_l6 }}</td>  
+                  <td> {{ marks.PRE_l6 }}</td>
+                  <td> {{ marks.PRE_l6 }} </td>
+
 
                 </tr>
                   <tr>
                     <th width="14%" rowspan="2">POT</th>
-                    <td width="2%">25 </td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>  
-                    <td>25</td>
+                    <td> {{ marks.PRE_l1 }}</td>
+                  <td> {{ marks.POT_l2 }}</td>
+                  <td> {{ marks.POT_l3 }}</td>
+                  <td> {{ marks.POT_l4 }}</td>
+                  <td> {{ marks.POT_l5 }}</td>
+                  <td> {{ marks.POT_l6 }}</td>  
+                  <td> {{ marks.POT_l6 }}</td>
+                  <td> {{ marks.POT_l6 }} </td>
                   </tr>
                   <tr>
                     <!-- <th width="14%">POT</th> -->
                     <!-- <td width="2%">25 </td> -->
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
+                    <td> {{ marks.POT_l1 }}</td>
+                  <td> {{ marks.POT_l2 }}</td>
+                  <td> {{ marks.POT_l3 }}</td>
+                  <td> {{ marks.POT_l4 }}</td>
+                  <td> {{ marks.POT_l5 }}</td>
+                  <td> {{ marks.POT_l6 }}</td>  
+                  <td> {{ marks.POT_l6 }}</td>
+                  <td> {{ marks.POT_l6 }} </td>
   
                   </tr>
                   <tr>
                     <th width="14%" rowspan="2">POOT</th>
-                    <td width="2%">25 </td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>  
-                    <td>25</td>
+                    <td> {{ marks.POOT_l1 }}</td>
+                  <td> {{ marks.POOT_l2 }}</td>
+                  <td> {{ marks.POOT_l3 }}</td>
+                  <td> {{ marks.POOT_l4 }}</td>
+                  <td> {{ marks.POOT_l5 }}</td>
+                  <td> {{ marks.POOT_l6 }}</td>  
+                  <td> {{ marks.POOT_l6 }}</td>
+                  <td> {{ marks.POOT_l6 }} </td>
                   </tr>
                   <tr>
                     <!-- <th width="14%">POT</th> -->
                     <!-- <td width="2%">25 </td> -->
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
+                    <td> {{ marks.POOT_l1 }}</td>
+                  <td> {{ marks.POOT_l2 }}</td>
+                  <td> {{ marks.POOT_l3 }}</td>
+                  <td> {{ marks.POOT_l4 }}</td>
+                  <td> {{ marks.POOT_l5 }}</td>
+                  <td> {{ marks.POOT_l6 }}</td>  
+                  <td> {{ marks.POOT_l6 }}</td>
+                  <td> {{ marks.POOT_l6 }} </td>
   
                   </tr>
                   <tr>
                     <th width="14%" rowspan="2">POST</th>
-                    <td width="2%">25 </td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>  
-                    <td>25</td>
+                    <td> {{ marks.POST_l1 }}</td>
+                  <td> {{ marks.POST_l2 }}</td>
+                  <td> {{ marks.POST_l3 }}</td>
+                  <td> {{ marks.POST_l4 }}</td>
+                  <td> {{ marks.POST_l5 }}</td>
+                  <td> {{ marks.POST_l6 }}</td>  
+                  <td> {{ marks.POST_l6 }}</td>
+                  <td> {{ marks.POST_l6 }} </td>
                   </tr>
                   <tr>
                     <!-- <th width="14%">POT</th> -->
                     <!-- <td width="2%">25 </td> -->
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>
-                    <td>25</td>    
-                    <td>25</td>
+                  <td> {{ marks.POST_l1 }}</td>
+                  <td> {{ marks.POST_l2 }}</td>
+                  <td> {{ marks.POST_l3 }}</td>
+                  <td> {{ marks.POST_l4 }}</td>
+                  <td> {{ marks.POST_l5 }}</td>
+                  <td> {{ marks.POST_l6 }}</td>  
+                  <td> {{ marks.POST_l6 }}</td>
+                  <td> {{ marks.POST_l6 }} </td>
   
                   </tr> 
                

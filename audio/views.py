@@ -2,7 +2,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import DictationCard, ExamCardDetails, StudentEnroll, DictationAudio, TestSchedule ,StudentTestStats
+from .models import DictationCard, ExamCardDetails, StudentEnroll, DictationAudio, TestSchedule ,StudentTestStats, TestMarks
 from .forms import StuEnroll, SclEnroll
 from json import dumps , loads 
 from django.core import serializers
@@ -95,6 +95,7 @@ def dictationaudio(request):
 @login_required
 def enroll(request):
     if request.method == "POST":
+        # import pdb; pdb.set_trace()
         if request.POST.get('stuname') :
            stu_class = request.POST.get('stuclass')
            max_class = StudentEnroll.objects.filter(stuclass=stu_class)
@@ -117,6 +118,11 @@ def enroll(request):
                sk = final_sk
                instance = StudentEnroll(stuname=name, stuclass=clas, stucontact=contact, stuemail=mail, stuschool=schl, stutown=town, sk = sk)
                instance.save()
+
+               marks = TestMarks()
+               marks.student = instance
+               marks.save()
+
                return redirect('enroll')  
            else:
                 return redirect('/')  
@@ -132,6 +138,38 @@ def enroll(request):
         form = StuEnroll()
     return render(request, 'enroll.html',{'form': form} )
 
+def marksinit(request,sk):
+    try:
+        student = StudentEnroll.objects.get(sk = sk)
+        marks = TestMarks()
+        marks.student = student
+        marks.save()
+        print("Intialzed")
+    except:
+        pass
+    return redirect(studentprofile, sk)
+
+def marksupdate(request,sk):
+    if request.method == "POST":
+        student = StudentEnroll.objects.get(sk=sk)
+        level = request.POST.get('level')
+        marks = request.POST.get('marks')
+        test_type , test_level = level.split('_')
+        print(test_level, test_type)
+        # import pdb; pdb.set_trace()
+        dic1 = {'l1' : 'Sunnapadaalu', 'l2' : 'Dheergaalu', 'l3': 'Dwithhaalu', 'l4' : 'Samukthaalu', 'l5' : 'MahaPranalu', 'l6': 'Sa,Sha,Ha lu'}
+        stusched = TestSchedule.objects.filter(name= student, status=3 , test_level= dic1.get(test_level), test_type=test_type)
+        if stusched:
+            student = StudentEnroll.objects.get(sk = sk)
+            markobj = TestMarks.objects.filter(student=student).update(**{level: marks})
+            msg = "Updated the Marks"
+
+        else:
+            msg = " * Cannot Update Marks Until Test Done"
+            messages.info(request, msg)
+        print(level, marks)
+        return redirect(studentprofile, sk)  
+
 @login_required
 def dashboard(request):
     student_details_1 = StudentEnroll.objects.all()
@@ -145,8 +183,10 @@ def schedules(request):
     upcoming = TestSchedule.objects.filter(scheduled_date__gt=now, status=1).order_by('scheduled_date', 'time_from')
     passed = TestSchedule.objects.filter(scheduled_date__lt=now, status=1).order_by('-scheduled_date', 'time_from')
     cancelled = TestSchedule.objects.filter(status=9).order_by('-scheduled_date', 'time_from')
+    completed = TestSchedule.objects.filter(status=3).order_by('-scheduled_date', 'time_from')
 
-    context =  {'upcoming': upcoming, 'passed': passed, 'todayscheds' : todayscheds, 'cancelled' : cancelled}
+
+    context =  {'upcoming': upcoming, 'passed': passed, 'todayscheds' : todayscheds, 'cancelled' : cancelled, 'completed' : completed}
     return render(request, 'schedules.html', context)    
 
 
@@ -231,17 +271,15 @@ def schedule(request):
 @login_required
 def testinputs(request):
         # obj = StudentEnroll.objects.get(sk=sk)
-        # import pdb;pdb.set_trace()
         if request.method == "POST":
             print(request.POST)
-            # import pdb; pdb.set_trace()
             studentsk = request.POST.get('studentsk')
             stuname = request.POST.get('studentname')
             subject = request.POST.get('subject')
             level = request.POST.get('level')
             test_type = request.POST.get('test_type')
             obj = { 'sk' : studentsk, 'sub' : subject, 'test_type' : test_type, 'name' : stuname, 'level': level}
-            if request.POST.get('starttest'):
+            if request.POST.get('starttest') or request.POST.get('go'):
                 return render(request, 'testinputs.html', obj)
             elif request.POST.get('reschedule'):
                 return render(request, 'reschedule.html', obj) 
@@ -280,8 +318,12 @@ def letsmakefun(request):
 @login_required
 def studentprofile(request, sk):
     obj = StudentEnroll.objects.get(sk=sk)
-    stats = StudentTestStats.objects.filter(name=obj).order_by('-datenow') 
-    context = {"student_meta" : obj , "student_stats": stats}
+    stats = StudentTestStats.objects.filter(name=obj).order_by('-datenow')
+    try:
+        marks = TestMarks.objects.get(student=obj)
+    except:
+        marks = {}
+    context = {"student_meta" : obj , "student_stats": stats, "marks": marks}
     return render(request, "student_profile.html", context)
 
 def statusupdate(request):

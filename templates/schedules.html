@@ -8,8 +8,27 @@
   <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
   <script src='main.js'></script> -->
   <style>
-
-
+    .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+    
+    .active, .collapsible:hover {
+      background-color: #555;
+    }
+    
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+    }
 
 
     .overlay {
@@ -133,208 +152,272 @@
 <body>
  
   <main>
-    <label>
+    <!-- <label>
       <span>Search:</span>
       <input placeholder="Enter search term" type="search" id="searchInput">
-    </label>
-    <h2>Today's Schedules</h2>
-    <div class="table-wrapper">
-      <table id="filterTable">
-        <thead>
-          <tr>
-            <th data-type="text">LSA ID</th>
-            <th data-type="text">Name</th>
-            <th data-type="text">Subject</th>
-            <th data-type="text">Type Test</th>
-            <th data-type="text">Type Level</th>
-            <th data-type="text">Date</th>
-            <th data-type="text">Time</th>
-            <th data-type="text">GO</th>
-            <th data-type="text">Re</th>
-            <th data-type="text">X</th>
+    </label> -->
 
 
-          </tr>
-        </thead>
-        <tbody>
-        {% for sched in todayscheds %}
-			<form action="testinputs" method="POST"> 
-				{% csrf_token %}
-			<tr>
-                <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
-                <td>{{ sched.name.stuname}}</td>
-                <td>{{ sched.subject }}</td>
-                <td>{{ sched.test_type}}</td>
-                <td>{{ sched.test_level}}</td>
-				<td>{{ sched.scheduled_date }}</td>
-				<td>{{ sched.time_from }} to {{ sched.time_to}}</td>
-				<td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
-				<td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
-        <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
-        <td style="display: none;"><input type="hidden"  name="level" value="{{ sched.test_level }}"></td>
-				<td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
-        <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td>
-        <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
-        <td> <button  type="submit" name="delete" value="delete" >X </button></td>
-
-
-
-				<!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
-					<!-- <a href="/testinputs"> GO</a></button></td> -->
-			</tr>
-        </form>
-
-		{% endfor %}
-        </tbody>
-      </table>
-      
+    <p>Today's Schedules</p>
+    <button type="button" class="collapsible"><h2>Today's Schedules</h2></button>
+    <div class="content">
+ 
+      <div class="table-wrapper">
+        <table id="filterTable">
+          <thead>
+            <tr>
+              <th data-type="text">LSA ID</th>
+              <th data-type="text">Name</th>
+              <th data-type="text">Subject</th>
+              <th data-type="text">Type Test</th>
+              <th data-type="text">Type Level</th>
+              <th data-type="text">Date</th>
+              <th data-type="text">Time</th>
+              <th data-type="text">GO</th>
+              <th data-type="text">Re</th>
+              <th data-type="text">X</th>  
+            </tr>
+          </thead>
+          <tbody>
+          {% for sched in todayscheds %}
+        <form action="testinputs" method="POST"> 
+          {% csrf_token %}
+        <tr>
+                  <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
+                  <td>{{ sched.name.stuname}}</td>
+                  <td>{{ sched.subject }}</td>
+                  <td>{{ sched.test_type}}</td>
+                  <td>{{ sched.test_level}}</td>
+          <td>{{ sched.scheduled_date }}</td>
+          <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
+          <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
+          <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
+          <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
+          <td style="display: none;"><input type="hidden"  name="level" value="{{ sched.test_level }}"></td>
+          <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
+          <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td>
+          <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
+          <td> <button  type="submit" name="delete" value="delete" >X </button></td>
+  
+  
+  
+          <!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
+            <!-- <a href="/testinputs"> GO</a></button></td> -->
+        </tr>
+          </form>
+  
+      {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
     </div>
-    <h2>Upcoming Schedules:</h2>
-    <div class="table-wrapper">
-      <table id="filterTable">
-        <thead>
-          <tr>
-            <th data-type="text">LSA ID</th>
-            <th data-type="text">Name</th>
-            <th data-type="text">Subject</th>
-            <th data-type="text">Type Test</th>
-            <th data-type="text">Type Level</th>
-            <th data-type="text">Date</th>
-            <th data-type="text">Time</th>
-            <th data-type="text">GO</th>
-            <th data-type="text">Re</th>
-            <th data-type="text">X</th>
+    <!-- Upcoming Schedules -->
+    <button type="button" class="collapsible"><h2>Upcoming Schedules</h2></button>
+    <div class="content">
+      <div class="table-wrapper">
+        <table id="filterTable">
+          <thead>
+            <tr>
+              <th data-type="text">LSA ID</th>
+              <th data-type="text">Name</th>
+              <th data-type="text">Subject</th>
+              <th data-type="text">Type Test</th>
+              <th data-type="text">Type Level</th>
+              <th data-type="text">Date</th>
+              <th data-type="text">Time</th>
+              <th data-type="text">GO</th>
+              <th data-type="text">Re</th>
+              <th data-type="text">X</th>
 
 
-          </tr>
-        </thead>
-        <tbody>
-        {% for sched in upcoming %}
-			<form action="testinputs" method="POST"> 
-				{% csrf_token %}
-			<tr>
-                <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
-                <td>{{ sched.name.stuname}}</td>
-                <td>{{ sched.subject }}</td>
-                <td>{{ sched.test_type}}</td>
-                <td>{{ sched.test_level}}</td>
-                <td>{{ sched.scheduled_date }}</td>
-                <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
-                <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
-                <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
-                <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
-                <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
-                <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
-                <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td>
-                <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
-                <td> <button  type="submit" name="delete" value="delete" >X </button></td>
+            </tr>
+          </thead>
+          <tbody>
+          {% for sched in upcoming %}
+        <form action="testinputs" method="POST"> 
+          {% csrf_token %}
+        <tr>
+                  <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
+                  <td>{{ sched.name.stuname}}</td>
+                  <td>{{ sched.subject }}</td>
+                  <td>{{ sched.test_type}}</td>
+                  <td>{{ sched.test_level}}</td>
+                  <td>{{ sched.scheduled_date }}</td>
+                  <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
+                  <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
+                  <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
+                  <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
+                  <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
+                  <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
+                  <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td>
+                  <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
+                  <td> <button  type="submit" name="delete" value="delete" >X </button></td>
 
-				<!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
-					<!-- <a href="/testinputs"> GO</a></button></td> -->
-			</tr>
-            </form>
-		{% endfor %}
-        </tbody>
-      </table>
-      
+          <!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
+            <!-- <a href="/testinputs"> GO</a></button></td> -->
+        </tr>
+              </form>
+      {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
     </div>
-    <h2>Missed Schedules:</h2>
-    <div class="table-wrapper">
-      <table id="filterTable">
-        <thead>
-          <tr>
-            <th data-type="text">LSA ID</th>
-            <th data-type="text">Name</th>
-            <th data-type="text">Subject</th>
-            <th data-type="text">Type Test</th>
-            <th data-type="text">Type Level</th>
-            <th data-type="text">Date</th>
-            <th data-type="text">Time</th>
-            <!-- <th data-type="text">GO</th> -->
-            <th data-type="text">Re</th>
-            <th data-type="text">X</th>
+    <!-- Missed Schedules -->
+    <button type="button" class="collapsible"><h2>Missed Schedules</h2></button>
+    <div class="content">
+      <div class="table-wrapper">
+        <table id="filterTable">
+          <thead>
+            <tr>
+              <th data-type="text">LSA ID</th>
+              <th data-type="text">Name</th>
+              <th data-type="text">Subject</th>
+              <th data-type="text">Type Test</th>
+              <th data-type="text">Type Level</th>
+              <th data-type="text">Date</th>
+              <th data-type="text">Time</th>
+              <!-- <th data-type="text">GO</th> -->
+              <th data-type="text">Re</th>
+              <th data-type="text">X</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for sched in passed %}
+        <form action="testinputs" method="POST"> 
+          {% csrf_token %}
+        <tr>
+                  <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
+                  <td>{{ sched.name.stuname}}</td>
+                  <td>{{ sched.subject }}</td>
+                  <td>{{ sched.test_type}}</td>
+                  <td>{{ sched.test_level}}</td>
+          <td>{{ sched.scheduled_date }}</td>
+          <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
+          <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
+          <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
+          <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
+          <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
+          <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
+          <!-- <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td> -->
+          <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
+          <td> <button  type="submit" name="delete" value="delete" >X </button></td>
 
-
-          </tr>
-        </thead>
-        <tbody>
-        {% for sched in passed %}
-			<form action="testinputs" method="POST"> 
-				{% csrf_token %}
-			<tr>
-                <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
-                <td>{{ sched.name.stuname}}</td>
-                <td>{{ sched.subject }}</td>
-                <td>{{ sched.test_type}}</td>
-                <td>{{ sched.test_level}}</td>
-				<td>{{ sched.scheduled_date }}</td>
-        <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
-        <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
-				<td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
-				<td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
-				<td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
-				<td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
-        <!-- <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td> -->
-        <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
-        <td> <button  type="submit" name="delete" value="delete" >X </button></td>
-
-				<!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
-					<!-- <a href="/testinputs"> GO</a></button></td> -->
-			</tr>
-		    </form>
-		{% endfor %}
-        </tbody>
-      </table>
-      
+          <!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
+            <!-- <a href="/testinputs"> GO</a></button></td> -->
+        </tr>
+          </form>
+      {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
     </div>
-    <h2>Quitted Schedules:</h2>
-    <div class="table-wrapper">
-      <table id="filterTable">
-        <thead>
-          <tr>
-            <th data-type="text">LSA ID</th>
-            <th data-type="text">Name</th>
-            <th data-type="text">Subject</th>
-            <th data-type="text">Type Test</th>
-            <th data-type="text">Type Level</th>
-            <th data-type="text">Date</th>
-            <th data-type="text">Time</th>
-            <!-- <th data-type="text">GO</th> -->
-            <th data-type="text">Re</th>
-            <th data-type="text">X</th>
+    <!-- Quitted Schedules -->
+    <button type="button" class="collapsible"><h2>Quitted Schedules</h2></button>
+    <div class="content">
+      <div class="table-wrapper">
+        <table id="filterTable">
+          <thead>
+            <tr>
+              <th data-type="text">LSA ID</th>
+              <th data-type="text">Name</th>
+              <th data-type="text">Subject</th>
+              <th data-type="text">Type Test</th>
+              <th data-type="text">Type Level</th>
+              <th data-type="text">Date</th>
+              <th data-type="text">Time</th>
+              <!-- <th data-type="text">GO</th> -->
+              <th data-type="text">Re</th>
+              <th data-type="text">X</th>
 
-          </tr>
-        </thead>
-        <tbody>
-        {% for sched in cancelled %}
-			<form action="testinputs" method="POST"> 
-				{% csrf_token %}
-			<tr>
-                <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
-                <td>{{ sched.name.stuname}}</td>
-                <td>{{ sched.subject }}</td>
-                <td>{{ sched.test_type}}</td>
-                <td>{{ sched.test_level}}</td>
-                <td>{{ sched.scheduled_date }}</td>
-                <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
-                <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
-                <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
-                <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
-                <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
-                <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
-                <!-- <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td> -->
-                <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
-                <td> <button  type="submit" name="delete" value="delete" >X </button></td>
-                <!-- <td> <button name="delete" style="display: none;" type="submit" id="delete" value="delete">Confirm</button></td> -->
-				<!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
-					<!-- <a href="/testinputs"> GO</a></button></td> -->
-			</tr>
-            </form>
-		{% endfor %}
-        </tbody>
-      </table>
-      
+            </tr>
+          </thead>
+          <tbody>
+          {% for sched in cancelled %}
+        <form action="testinputs" method="POST"> 
+          {% csrf_token %}
+        <tr>
+                  <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
+                  <td>{{ sched.name.stuname}}</td>
+                  <td>{{ sched.subject }}</td>
+                  <td>{{ sched.test_type}}</td>
+                  <td>{{ sched.test_level}}</td>
+                  <td>{{ sched.scheduled_date }}</td>
+                  <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
+                  <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
+                  <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
+                  <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
+                  <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
+                  <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
+                  <!-- <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td> -->
+                  <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
+                  <td> <button  type="submit" name="delete" value="delete" >X </button></td>
+                  <!-- <td> <button name="delete" style="display: none;" type="submit" id="delete" value="delete">Confirm</button></td> -->
+          <!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
+            <!-- <a href="/testinputs"> GO</a></button></td> -->
+        </tr>
+              </form>
+      {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
     </div>
+    
+    <!-- Completed Schedules -->
+    <button type="button" class="collapsible"><h2>Completed Schedules</h2></button>
+    <div class="content">
+          <div class="table-wrapper">
+            <table id="filterTable">
+              <thead>
+                <tr>
+                  <th data-type="text">LSA ID</th>
+                  <th data-type="text">Name</th>
+                  <th data-type="text">Subject</th>
+                  <th data-type="text">Type Test</th>
+                  <th data-type="text">Type Level</th>
+                  <th data-type="text">Date</th>
+                  <th data-type="text">Time</th>
+                  <!-- <th data-type="text">GO</th> -->
+                  <!-- <th data-type="text">Re</th>
+                  <th data-type="text">X</th> -->
+    
+                </tr>
+              </thead>
+              <tbody>
+              {% for sched in completed %}
+            <form action="testinputs" method="POST"> 
+              {% csrf_token %}
+            <tr>
+                      <td> <a href="/profile/{{ sched.name.sk }}">{{ sched.name.sk }}</a></td>
+                      <td>{{ sched.name.stuname}}</td>
+                      <td>{{ sched.subject }}</td>
+                      <td>{{ sched.test_type}}</td>
+                      <td>{{ sched.test_level}}</td>
+                      <td>{{ sched.scheduled_date }}</td>
+                      <td>{{ sched.time_from }} to {{ sched.time_to}}</td>
+                      <td style="display:none;" ><input type="hidden"  name="level" value= "{{ sched.test_level }}"></td>
+                      <td style="display:none;" ><input type="hidden"  name="studentsk" value= "{{ sched.name.sk }}"></td>
+                      <td style="display:none;" ><input type="hidden"  name="studentname" value= "{{ sched.name.stuname }}"></td>
+                      <td style="display: none;"><input type="hidden" name="subject"  value="{{ sched.subject }}"></td>
+                      <td style="display: none;"><input type="hidden"  name="test_type" value="{{ sched.test_type }}"></td>
+                      <!-- <td> <button  type="submit"  name = "starttest" value = "starttest">GO </button></td> -->
+                      <!-- <td> <button  type="submit" name="reschedule" value="reschedule" >↩ </button></td>
+                      <td> <button  type="submit" name="delete" value="delete" >X </button></td> -->
+                      <!-- <td> <button name="delete" style="display: none;" type="submit" id="delete" value="delete">Confirm</button></td> -->
+              <!-- <td><button class="button" type="submit"> <a href="/testinputs/{{ sched.name.sk }}">GO</a>  </button></td> -->
+                <!-- <a href="/testinputs"> GO</a></button></td> -->
+            </tr>
+                  </form>
+          {% endfor %}
+              </tbody>
+            </table>
+            
+          </div>
+     </div>
+        
   </main>
  
   <script>
@@ -358,5 +441,21 @@ const filterTable = event => {
 
 searchInput.addEventListener('keyup', filterTable, false)
   </script>
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+    </script>
 </body>
 </html>

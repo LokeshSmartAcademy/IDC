@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ExamCardDetails, StudentEnroll, SchoolEnroll, DictationAudio, TestSchedule ,StudentTestStats, TeluguLevels
+from .models import ExamCardDetails, StudentEnroll, SchoolEnroll, DictationAudio, TestSchedule ,StudentTestStats, TeluguLevels, TestMarks
 # Register your models here.
 
 admin.site.register(TeluguLevels)
@@ -9,4 +9,5 @@ admin.site.register(SchoolEnroll)
 admin.site.register(DictationAudio)
 admin.site.register(TestSchedule)
 admin.site.register(StudentTestStats)
+admin.site.register(TestMarks)
 

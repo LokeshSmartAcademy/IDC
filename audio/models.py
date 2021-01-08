@@ -52,7 +52,7 @@ class StudentEnroll(models.Model):
     stuname = models.CharField(max_length=30)
     sk = models.CharField(max_length=10,default="dummmi")
     stusubject = models.CharField(max_length=30, default="Telugu")
-    stuclass = models.CharField(max_length=10, choices= choices)
+    stuclass = models.CharField(max_length=10)
     stuschool = models.CharField(max_length=40)
     stutown = models.CharField(max_length=30)
     stucontact = models.CharField(max_length=12)
@@ -74,10 +74,10 @@ class SchoolEnroll(models.Model):
 
 class TestSchedule(models.Model):
     testTypes= (
-        ('PRE', 'PRE TEST'),
-        ('POT', 'POT TEST'),
-        ('POOT', 'POOT TEST'),
-        ('POST', 'POST TEST'),
+        ('PRE', 'PRE'),
+        ('POT', 'POT'),
+        ('POOT', 'POOT'),
+        ('POST', 'POST'),
 
     )
     name = models.ForeignKey(StudentEnroll, on_delete=models.CASCADE)
@@ -103,16 +103,16 @@ class TeluguLevels(models.Model):
 
 class StudentTestStats(models.Model):
     testTypes= (
-        ('PRE', 'PRE TEST'),
-        ('POT', 'POT TEST'),
-        ('POOT', 'POOT TEST'),
-        ('POST', 'POST TEST'),
+        ('PRE', 'PRE'),
+        ('POT', 'POT'),
+        ('POOT', 'POOT'),
+        ('POST', 'POST'),
 
     )
     name = models.ForeignKey(StudentEnroll, on_delete=models.CASCADE) # need to remove
     # schedule = models.ForeignKey(TestSchedule, on_delete=models.CASCADE)
     subject = models.CharField(max_length= 20, default="Telugu")
-    testtype = models.CharField(max_length=10, choices=testTypes, default="PRE")
+    testtype = models.CharField(max_length=10, default="PRE")
     level = models.CharField(max_length=20, default="SUNN")
     status = models.IntegerField(default=1)
     action = models.CharField(max_length=40, default="---")
@@ -122,5 +122,34 @@ class StudentTestStats(models.Model):
     times = models.CharField(default='-', max_length=2)   
 
     def __str__(self):
-        return self.name.stuname  
-       
+        return self.name.stuname
+
+class TestMarks(models.Model):
+    student = models.OneToOneField(StudentEnroll, on_delete=models.CASCADE)
+    PRE_l1 = models.IntegerField(default=-1)
+    PRE_l2 = models.IntegerField(default=-1)
+    PRE_l3 = models.IntegerField(default=-1)
+    PRE_l4 = models.IntegerField(default=-1)
+    PRE_l5 = models.IntegerField(default=-1)
+    PRE_l6 = models.IntegerField(default=-1)
+    POT_l1 = models.IntegerField(default=-1)
+    POT_l2 = models.IntegerField(default=-1)
+    POT_l3 = models.IntegerField(default=-1)
+    POT_l4 = models.IntegerField(default=-1)
+    POT_l5 = models.IntegerField(default=-1)
+    POT_l6 = models.IntegerField(default=-1)
+    POOT_l1 = models.IntegerField(default=-1)
+    POOT_l2 = models.IntegerField(default=-1)
+    POOT_l3 = models.IntegerField(default=-1)
+    POOT_l4 = models.IntegerField(default=-1)
+    POOT_l5 = models.IntegerField(default=-1)
+    POOT_l6 = models.IntegerField(default=-1)
+    POST_l1 = models.IntegerField(default=-1)
+    POST_l2 = models.IntegerField(default=-1)
+    POST_l3 = models.IntegerField(default=-1)
+    POST_l4 = models.IntegerField(default=-1)
+    POST_l5 = models.IntegerField(default=-1)
+    POST_l6 = models.IntegerField(default=-1)
+    
+    def __str__(self):
+        return self.student.stuname
