@@ -34,21 +34,6 @@ class DictationAudio(models.Model):
         return self.audio_level + "  " + str(self.audio_number) + " "+self.audio_name
 
 class StudentEnroll(models.Model):
-    choices = [
-    ('C1', '1'),
-    ('C2', '2'),
-    ('C3', '3'),
-    ('C4', '4'),
-    ('C5', '5'),
-    ('C6', '6'),
-    ('C7', '7'),
-    ('C8', '8'),
-    ('C9', '9'),
-    ('C10', '10'),
-    ('C_', '_'),
-
-
-]
     stuname = models.CharField(max_length=30)
     sk = models.CharField(max_length=10,default="dummmi")
     stusubject = models.CharField(max_length=30, default="Telugu")
@@ -72,19 +57,20 @@ class SchoolEnroll(models.Model):
     def __str__(self):
         return self.sclname + '>> '+ self.scltown
 
-class TestSchedule(models.Model):
-    testTypes= (
-        ('PRE', 'PRE'),
-        ('POT', 'POT'),
-        ('POOT', 'POOT'),
-        ('POST', 'POST'),
+class TeluguLevels(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    nickname = models.CharField(max_length=6, unique=True)
+    shortname = models.CharField(max_length=2, unique=True)
 
-    )
+    def __str__(self):
+        return self.nickname         
+
+class TestSchedule(models.Model):
     name = models.ForeignKey(StudentEnroll, on_delete=models.CASCADE)
-    test_nickname = models.CharField(max_length=5, default="l0")
+    test_nickname = models.CharField(max_length=5, default="Al1")
     subject = models.CharField(max_length=20)
-    test_type = models.CharField(max_length=10, choices=testTypes)
-    test_level = models.CharField(max_length=20)
+    test_type = models.CharField(max_length=10)
+    test_level = models.ForeignKey(TeluguLevels, on_delete=models.CASCADE)
     scheduled_date = models.DateField()
     time_from = models.TimeField()
     time_to = models.TimeField()
@@ -92,14 +78,6 @@ class TestSchedule(models.Model):
 
     def __str__(self):
         return self.name.sk + self.name.stuname + str(self.status)
-
-class TeluguLevels(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-    nickname = models.CharField(max_length=6, unique=True)
-    shortname = models.CharField(max_length=2, unique=True)
-
-    def __str__(self):
-        return self.nickname 
 
 class StudentTestStats(models.Model):
     testTypes= (
@@ -126,30 +104,78 @@ class StudentTestStats(models.Model):
 
 class TestMarks(models.Model):
     student = models.OneToOneField(StudentEnroll, on_delete=models.CASCADE)
-    PRE_l1 = models.IntegerField(default=-1)
-    PRE_l2 = models.IntegerField(default=-1)
-    PRE_l3 = models.IntegerField(default=-1)
-    PRE_l4 = models.IntegerField(default=-1)
-    PRE_l5 = models.IntegerField(default=-1)
-    PRE_l6 = models.IntegerField(default=-1)
-    POT_l1 = models.IntegerField(default=-1)
-    POT_l2 = models.IntegerField(default=-1)
-    POT_l3 = models.IntegerField(default=-1)
-    POT_l4 = models.IntegerField(default=-1)
-    POT_l5 = models.IntegerField(default=-1)
-    POT_l6 = models.IntegerField(default=-1)
-    POOT_l1 = models.IntegerField(default=-1)
-    POOT_l2 = models.IntegerField(default=-1)
-    POOT_l3 = models.IntegerField(default=-1)
-    POOT_l4 = models.IntegerField(default=-1)
-    POOT_l5 = models.IntegerField(default=-1)
-    POOT_l6 = models.IntegerField(default=-1)
-    POST_l1 = models.IntegerField(default=-1)
-    POST_l2 = models.IntegerField(default=-1)
-    POST_l3 = models.IntegerField(default=-1)
-    POST_l4 = models.IntegerField(default=-1)
-    POST_l5 = models.IntegerField(default=-1)
-    POST_l6 = models.IntegerField(default=-1)
+
+    PRE_l1 = models.CharField(default=' ', max_length=2)
+    PRE_g1 = models.CharField(default=' ', max_length=2)
+
+    PRE_l2 = models.CharField(default=' ', max_length=2)
+    PRE_g2 = models.CharField(default=' ', max_length=2)
+
+    PRE_l3 = models.CharField(default=' ', max_length=2)
+    PRE_g3 = models.CharField(default=' ', max_length=2)
+
+    PRE_l4 = models.CharField(default=' ', max_length=2)
+    PRE_g4 = models.CharField(default=' ', max_length=2)
+
+    PRE_l5 = models.CharField(default=' ', max_length=2)
+    PRE_g5 = models.CharField(default=' ', max_length=2)
+
+    PRE_l6 = models.CharField(default=' ', max_length=2)
+    PRE_g6 = models.CharField(default=' ', max_length=2)
+
+    POT_l1 = models.CharField(default=' ', max_length=2)
+    POT_g1 = models.CharField(default=' ', max_length=2)
+    
+    POT_l2 = models.CharField(default=' ', max_length=2)
+    POT_g2 = models.CharField(default=' ', max_length=2)    
+
+    POT_l3 = models.CharField(default=' ', max_length=2)
+    POT_g3 = models.CharField(default=' ', max_length=2)
+
+    POT_l4 = models.CharField(default=' ', max_length=2)
+    POT_g4 = models.CharField(default=' ', max_length=2)
+
+    POT_l5 = models.CharField(default=' ', max_length=2)
+    POT_g5 = models.CharField(default=' ', max_length=2)
+
+    POT_l6 = models.CharField(default=' ', max_length=2)
+    POT_g6 = models.CharField(default=' ', max_length=2)
+
+    POOT_l1 = models.CharField(default=' ', max_length=2)
+    POOT_g1 = models.CharField(default=' ', max_length=2)
+
+    POOT_l2 = models.CharField(default=' ', max_length=2)
+    POOT_g2 = models.CharField(default=' ', max_length=2)
+
+    POOT_l3 = models.CharField(default=' ', max_length=2)
+    POOT_g3 = models.CharField(default=' ', max_length=2)
+
+    POOT_l4 = models.CharField(default=' ', max_length=2)
+    POOT_g4 = models.CharField(default=' ', max_length=2)
+
+    POOT_l5 = models.CharField(default=' ', max_length=2)
+    POOT_g5 = models.CharField(default=' ', max_length=2)
+
+    POOT_l6 = models.CharField(default=' ', max_length=2)
+    POOT_g6 = models.CharField(default=' ', max_length=2)
+
+    POST_l1 = models.CharField(default=' ', max_length=2)
+    POST_g1 = models.CharField(default=' ', max_length=2)
+
+    POST_l2 = models.CharField(default=' ', max_length=2)
+    POST_g2 = models.CharField(default=' ', max_length=2)
+
+    POST_l3 = models.CharField(default=' ', max_length=2)
+    POST_g3 = models.CharField(default=' ', max_length=2)
+
+    POST_l4 = models.CharField(default=' ', max_length=2)
+    POST_g4 = models.CharField(default=' ', max_length=2)
+
+    POST_l5 = models.CharField(default=' ', max_length=2)
+    POST_g5 = models.CharField(default=' ', max_length=2)
+
+    POST_l6 = models.CharField(default=' ', max_length=2)
+    POST_g6 = models.CharField(default=' ', max_length=2)
     
     def __str__(self):
         return self.student.stuname

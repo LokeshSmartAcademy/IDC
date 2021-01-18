@@ -47,12 +47,9 @@
 
           <label for="sel3">Select Level:</label>
           <select class="form-control" id="sel3" name="test_level" required>
-            <option>Sunnapadaalu</option>
-            <option>Dheergaalu</option>
-            <option>Dwithhaalu</option>
-            <option>Samukthaalu</option>
-            <option>MahaPranalu</option>
-            <option>Sa,Sha,Ha lu</option>
+            {% for level in testlevels %}
+            <option value='{{level.nickname}}'>{{level.nickname }} - {{ level.name }}</option>
+            {% endfor %}
           </select>
           <br>
 

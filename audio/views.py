@@ -2,7 +2,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import DictationCard, ExamCardDetails, StudentEnroll, DictationAudio, TestSchedule ,StudentTestStats, TestMarks
+from .models import DictationCard, ExamCardDetails, StudentEnroll, DictationAudio, TestSchedule ,StudentTestStats, TestMarks, TeluguLevels
 from .forms import StuEnroll, SclEnroll
 from json import dumps , loads 
 from django.core import serializers
@@ -151,18 +151,60 @@ def marksinit(request,sk):
 
 def marksupdate(request,sk):
     if request.method == "POST":
+        import pdb; pdb.set_trace()
         student = StudentEnroll.objects.get(sk=sk)
         level = request.POST.get('level')
         marks = request.POST.get('marks')
+        if int(marks) in range(0,6):
+            grade = 'D'
+        elif int(marks) in range(6,11):
+            grade = 'C'
+        elif int(marks) in range(11,13):
+            grade = 'B'
+        elif int(marks) in range(13,18):
+            grade ='B+'
+        elif int(marks) in range(18,23):
+            grade = 'A'
+        elif int(marks) in range(23,26):
+            grade = 'A+'                     
         test_type , test_level = level.split('_')
+        level_grade = level.replace('l','g')
         print(test_level, test_type)
-        # import pdb; pdb.set_trace()
-        dic1 = {'l1' : 'Sunnapadaalu', 'l2' : 'Dheergaalu', 'l3': 'Dwithhaalu', 'l4' : 'Samukthaalu', 'l5' : 'MahaPranalu', 'l6': 'Sa,Sha,Ha lu'}
-        stusched = TestSchedule.objects.filter(name= student, status=3 , test_level= dic1.get(test_level), test_type=test_type)
+        import pdb; pdb.set_trace()
+        dic1 = {'l1' : 'SUNN', 'l2' : 'DHEE', 'l3': 'DWIT', 'l4' : 'SAMY', 'l5' : 'MAHA', 'l6': 'SAHA'}
+        lev_1 = TeluguLevels.objects.get(shortname=test_level.upper())
+        stusched = TestSchedule.objects.get(name= student, status=3 , test_level= lev_1, test_type=test_type)
         if stusched:
+            stusched.status = 4
+            stusched.save()
             student = StudentEnroll.objects.get(sk = sk)
             markobj = TestMarks.objects.filter(student=student).update(**{level: marks})
-            msg = "Updated the Marks"
+            gradeobj = TestMarks.objects.filter(student=student).update(**{level_grade: grade})
+
+            
+            stats = StudentTestStats()
+            stats.name = student
+            stats.subject = "Telugu"
+            stats.testtype = test_type
+            stats.level = test_level
+            stats.status = 4
+            stats.action = "marks posted"
+            stats.conductedBy = request.user
+            stats.save()
+            print("stats saved")
+            if grade == 'A+':
+                type_list = ['PRE', 'POT', 'POOT', 'POST']
+                index = type_list.index(test_type)
+                for index in type_list[index+1:]:
+                    level = index + '_'+test_level
+                    level_grade = level.replace('l','g')
+                    marks = '*'
+                    grade = '*'
+                    markobj = TestMarks.objects.filter(student=student).update(**{level: marks})
+                    gradeobj = TestMarks.objects.filter(student=student).update(**{level_grade: grade})
+                    print("SUPER")
+                    print(index)
+
 
         else:
             msg = " * Cannot Update Marks Until Test Done"
@@ -193,7 +235,9 @@ def schedules(request):
 @login_required
 def schedule(request):
     student_details_1 = StudentEnroll.objects.filter(is_active= True)
+    testlevels = TeluguLevels.objects.all()
     if request.method =="POST":
+        # import pdb; pdb.set_trace()
         student = request.POST.get('selected_student')
         subject = request.POST.get('selected_subject')
         test_type = request.POST.get('test_type')
@@ -202,7 +246,9 @@ def schedule(request):
         time_from = request.POST.get('time_from')
         time_to = request.POST.get('time_to')
         dum = StudentEnroll.objects.filter(sk = student).get()
-        exists = TestSchedule.objects.filter(name=dum, subject=subject, test_type=test_type, test_level=test_level)
+        lev_1 = TeluguLevels.objects.get(nickname=test_level)
+        exists = ''
+        exists = TestSchedule.objects.filter(name=dum, subject=subject, test_type=test_type, test_level=lev_1)
         
         if request.POST.get('reschedule'):
             resched = TestSchedule.objects.get(name=dum, subject=subject, test_type=test_type, test_level=test_level)
@@ -232,10 +278,10 @@ def schedule(request):
                 return redirect('schedule')
             else:
                 print('Success')    
-                nickname_dict = {'l1': 'Sunn PRE', 'l2': 'Dhee PRE', 'l3': 'Dwit PRE', 'l4' : 'Sam PRE','l5' : 'Maha PRE', 'l6': 'Sa,Sha PRE',
-                                'l7': 'Sunn POT', 'l8': 'Dhee POT', 'l9' : 'Dwit POT', 'l10': 'Sam POT', 'l11': 'Maha POT', 'l12': 'Sa,Sha POT',
-                                'l13': 'Sunn POOT', 'l14' : 'Dhee POOT', 'l15': 'Dwit POOT', 'l16': 'Sam POOT', 'l17': 'Maha POOT', 'l18': 'Sa,Sha POOT',
-                                'l19' : 'Sunn POST', 'l20': 'Dhee POST', 'l21': 'Dwit POST', 'l22': 'Sam POST', 'l23': 'Maha POST', 'l24': 'Sa,Sha POST'
+                nickname_dict = {'Al1': 'SUNN PRE', 'Al2': 'DHEE PRE', 'Al3': 'DWIT PRE', 'Al4' : 'SAMY PRE','Al5' : 'MAHA PRE', 'Al6': 'SAHA PRE',
+                                'Bl1': 'SUNN POT', 'Bl2': 'DHEE POT', 'Bl3' : 'DWIT POT', 'Bl4': 'SAMY POT', 'Bl5': 'MAHA POT', 'Bl6': 'SAHA POT',
+                                'Cl1': 'SUNN POOT', 'Cl2' : 'DHEE POOT', 'Cl3': 'DWIT POOT', 'Cl4': 'SAMY POOT', 'Cl5': 'MAHA POOT', 'Cl6': 'SAHA POOT',
+                                'Dl1' : 'SUNN POST', 'Dl2': 'DHEE POST', 'Dl3': 'DWIT POST', 'Dl4': 'SAMY POST', 'Dl5': 'MAHA POST', 'Dl6': 'SAHA POST'
                                 }
 
                 for nick, value in nickname_dict.items():
@@ -251,7 +297,7 @@ def schedule(request):
                 test.subject = subject
                 test.test_nickname = nick_name
                 test.test_type = test_type
-                test.test_level= test_level
+                test.test_level= lev_1
                 test.name = dum
                 test.save()
                 # import pdb; pdb.set_trace()
@@ -266,7 +312,7 @@ def schedule(request):
                 stats.conductedBy = request.user
                 stats.save()
                 print("stats saved")
-    return render(request, 'schedule.html',{'students': student_details_1} )
+    return render(request, 'schedule.html',{'students': student_details_1, 'testlevels': testlevels} )
 
 @login_required
 def testinputs(request):
@@ -323,11 +369,13 @@ def studentprofile(request, sk):
         marks = TestMarks.objects.get(student=obj)
     except:
         marks = {}
+    print(marks)    
     context = {"student_meta" : obj , "student_stats": stats, "marks": marks}
     return render(request, "student_profile.html", context)
 
 def statusupdate(request):
     if request.method == "POST":
+        # import pdb; pdb.set_trace()
         print(request.POST)
         sub = request.POST.get('sub')
         level = request.POST.get('level')
@@ -335,7 +383,9 @@ def statusupdate(request):
         testtype = request.POST.get('test_type')
 
         stu_obj = StudentEnroll.objects.get(sk =sk)
-        test_sched = TestSchedule.objects.get(name=stu_obj, subject=sub, test_level=level, test_type=testtype)
+        lev_1 = TeluguLevels.objects.get(nickname=level)
+
+        test_sched = TestSchedule.objects.get(name=stu_obj, subject=sub, test_level=lev_1, test_type=testtype)
 
         state = request.POST.get('status')
         if state == "end":
@@ -359,12 +409,6 @@ def statusupdate(request):
         stats.level = level
         stats.status = status
         stats.save()
-
-
-
-
-
-
     return redirect('/')    
 
 
